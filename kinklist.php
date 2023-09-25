@@ -1,4 +1,18 @@
+
+
 <?php
+define('_JEXEC', 1);
+define('JPATH_BASE', '../');
+require_once(JPATH_BASE . 'includes/defines.php');
+require_once(JPATH_BASE . 'includes/framework.php');
+require_once(JPATH_BASE . 'includes/ymolib.php');
+$app = JFactory::getApplication('site');
+$user = JFactory::getUser();
+if ($user->id == 0) {
+    $app = JFactory::getApplication();
+    $app->redirect(JRoute::_('../'));
+}
+
 $user = JFactory::getUser();
 ?>
 <!DOCTYPE html>
@@ -10,13 +24,15 @@ $user = JFactory::getUser();
 		<link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMTAvMjEvMTV5ehY1AAAAZElEQVQ4jaWTwQ3AIAwDbcT+I9f9hjYQA/mAkO7igKAACWdFAF0A2gb0hP0uCyTATyAJSoaK5xGyEmTC9lktmORUdAQvBQ5cJshktoDk0HkmKRNUEmuE6ztYVXe7bT+jW7z9zi8qYiodCjCHKgAAAABJRU5ErkJggg==">
 		<link rel="stylesheet" type="text/css" href="./assets/style.min.css">
 		<script src="./assets/jquery-3.3.1.min.js"></script>
+		<script src="./assets/kinklist.js"></script>
+
 	</head>
 	<body>
-		<input type='hidden' name='user_id' id='user_id' value='<?php echo $user->id; ?>' />
-<input type='hidden' name='user_name' id='user_name' value='<?php echo $user->name; ?>' />
-<input type='hidden' name='user_email' id='user_email' value='<?php echo $user->email; ?>' />
-
+		
 		<div class="widthWrapper">
+        <p>User ID: <?php echo $user->id; ?></p>
+<p>User Name: <?php echo $user->name; ?></p>
+
 			<button id="Edit"></button>
 			<h1>Hypno Kink List</h1>
 			<div class="legend">
@@ -31,7 +47,11 @@ $user = JFactory::getUser();
 					<td><div><span data-color="#f389ae" class="choice try"></span> <span class="legend-text">Want To Try</span></div></td>
 					</tr>
 					</tbody>
-					</table>				
+					</table>			
+					<input type='hidden' name='user_id' id='user_id' value='<?php echo $user->id; ?>' />
+<input type='hidden' name='user_name' id='user_name' value='<?php echo $user->name; ?>' />
+<input type='hidden' name='user_email' id='user_email' value='<?php echo $user->email; ?>' />
+	
 			</div>
 			
 			<div id="ExportWrapper">
