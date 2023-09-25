@@ -6,20 +6,27 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMTAvMjEvMTV5ehY1AAAAZElEQVQ4jaWTwQ3AIAwDbcT+I9f9hjYQA/mAkO7igKAACWdFAF0A2gb0hP0uCyTATyAJSoaK5xGyEmTC9lktmORUdAQvBQ5cJshktoDk0HkmKRNUEmuE6ztYVXe7bT+jW7z9zi8qYiodCjCHKgAAAABJRU5ErkJggg==">
 		<link rel="stylesheet" type="text/css" href="./assets/style.min.css">
-		<script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script src="./assets/jquery-3.3.1.min.js"></script>
 	</head>
 	<body>
 		<div class="widthWrapper">
 			<button id="Edit"></button>
 			<h1>Hypno Kink List</h1>
 			<div class="legend">
-				<div><span data-color="#920000" class="choice no"></span> <span class="legend-text">No / N/A</span></div>
-				<div><span data-color="#DB6C00" class="choice maybe"></span> <span class="legend-text">Maybe</span></div>
-				<div><span data-color="#FDFD6B" class="choice okay"></span> <span class="legend-text">Okay</span></div>
-				<div><span data-color="#23FD22" class="choice like"></span> <span class="legend-text">Like</span></div>
-				<div><span data-color="#6DB5FE" class="choice favorite"></span> <span class="legend-text">Favorite</span></div>
-				<div><span data-color="#CC99CC" class="choice try"></span> <span class="legend-text">Want To Try</span></div>
+				<table border="1">
+					<tbody>
+					<tr>
+					<td><div><span data-color="#363636" class="choice no"></span> <span class="legend-text">No / N/A</span></div></td>
+					<td><div><span data-color="#fd7c31" class="choice maybe"></span> <span class="legend-text">Maybe</span></div>
+						<div><span data-color="#ffc233" class="choice okay"></span> <span class="legend-text">Okay</span></div>
+						<div><span data-color="#04e762" class="choice like"></span> <span class="legend-text">Like</span></div></td>
+					<td><div><span data-color="#b0e0e6" class="choice favorite"></span> <span class="legend-text">Favorite</span></div></td>
+					<td><div><span data-color="#f389ae" class="choice try"></span> <span class="legend-text">Want To Try</span></div></td>
+					</tr>
+					</tbody>
+					</table>				
 			</div>
+			
 			<div id="ExportWrapper">
 				<input type="text" id="URL">
 				<button id="Export">Export</button>
