@@ -1,5 +1,3 @@
-
-
 <?php
 define('_JEXEC', 1);
 define('JPATH_BASE', '../');
@@ -9,11 +7,8 @@ require_once(JPATH_BASE . 'includes/ymolib.php');
 $app = JFactory::getApplication('site');
 $user = JFactory::getUser();
 if ($user->id == 0) {
-    $app = JFactory::getApplication();
     $app->redirect(JRoute::_('../'));
 }
-
-$user = JFactory::getUser();
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +19,7 @@ $user = JFactory::getUser();
 		<link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMTAvMjEvMTV5ehY1AAAAZElEQVQ4jaWTwQ3AIAwDbcT+I9f9hjYQA/mAkO7igKAACWdFAF0A2gb0hP0uCyTATyAJSoaK5xGyEmTC9lktmORUdAQvBQ5cJshktoDk0HkmKRNUEmuE6ztYVXe7bT+jW7z9zi8qYiodCjCHKgAAAABJRU5ErkJggg==">
 		<link rel="stylesheet" type="text/css" href="./assets/style.min.css">
 		<script src="./assets/jquery-3.3.1.min.js"></script>
-		<script src="./assets/kinklist.js"></script>
+   
 
 	</head>
 	<body>
@@ -50,13 +45,14 @@ $user = JFactory::getUser();
 					</table>			
 					<input type='hidden' name='user_id' id='user_id' value='<?php echo $user->id; ?>' />
 <input type='hidden' name='user_name' id='user_name' value='<?php echo $user->name; ?>' />
-<input type='hidden' name='user_email' id='user_email' value='<?php echo $user->email; ?>' />
-	
+<input type="hidden" id="user_email" value="<?php echo $user->email; ?>">
+
 			</div>
 			
 			<div id="ExportWrapper">
 				<input type="text" id="URL">
 				<button id="Export">Export</button>
+                <button id="KinksOK" style="background-color: #8c2425; color: white;">SAVE</button>
 				<div id="Loading">Loading</div>
 			</div>
 			<button id="StartBtn"></button>
@@ -148,7 +144,7 @@ $user = JFactory::getUser();
 * Catalepsy(trouble staying awake)
 * Immobilization
 * Levitation(floating)
-* Freeze / ‘Stop’ Triggers
+* Freeze-Stop Triggers
 * Being Blank and empty
 * Having Amnesia
 * Repeating Mantras
@@ -304,7 +300,74 @@ $user = JFactory::getUser();
 				<div id="InputNext"></div>
 			</div>
 		</div>
-		<footer id="footer">Data stolen with ♥ from Herald</footer>
-		<script type="text/javascript" src="./assets/script.min.js"></script>
-	</body>
+<!-- ... -->
+<footer id="footer">Data stolen with ♥ from Herald</footer>
+<script type="text/javascript" src="./assets/script.min.js"></script>
+<script src="./assets/kinklist.js" defer></script>
+<script>
+$(document).ready(function(){
+  $("#KinksOK").click(function(){
+    // Initialize kinkData as an empty object
+    var kinkData = {};
+
+    // Fetch user and kink data with null checks
+    var userIdElem = document.getElementById('user_id');
+    var userNameElem = document.getElementById('user_name');
+    var userEmailElem = document.getElementById('user_email');
+    var kinkListTextAreaElem = document.getElementById('Kinks');
+
+    // Debugging: Print elements and kinkData to console
+    console.log("userIdElem:", userIdElem);
+    console.log("userNameElem:", userNameElem);
+    console.log("userEmailElem:", userEmailElem);
+    console.log("kinkListTextAreaElem:", kinkListTextAreaElem);
+    console.log("Kink Data:", kinkData);
+
+    if (!userIdElem || !userNameElem || !userEmailElem || !kinkListTextAreaElem) {
+      console.error("One or more elements are missing.");
+      return;
+    }
+
+    var userId = userIdElem.value;
+    var userName = userNameElem.value;
+    var userEmail = userEmailElem.value;
+    const kinkListTextArea = kinkListTextAreaElem.value;
+    const kinkListSections = kinkListTextArea.split('#');
+
+    // Process kink data
+    kinkListSections.forEach((section, index) => {
+      const lines = section.split('\n');
+      const sectionTitle = lines[0].trim();
+      const sectionItems = lines.slice(1).filter(line => line.startsWith('*')).map(line => line.slice(1).trim());
+      kinkData[sectionTitle] = sectionItems;
+    });
+
+    // Debugging: Print key variables to console
+    console.log("User ID:", userId);
+    console.log("User Name:", userName);
+    console.log("User Email:", userEmail);
+
+    // AJAX call to save data
+    $.ajax({
+      url: 'save_to_database.php',
+      type: 'POST',
+      data: JSON.stringify({
+        userId: userId,
+        userName: userName,
+        userEmail: userEmail,
+        kinkData: kinkData
+      }),
+      contentType: 'application/json; charset=utf-8',
+      success: function(response) {
+        console.log("Data saved successfully: ", response);
+      },
+      error: function(error) {
+        console.log("Error saving data: ", error);
+      }
+    });
+  });
+});
+</script>
+</body>
 </html>
+
